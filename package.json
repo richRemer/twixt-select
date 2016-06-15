@@ -1,0 +1,19 @@
+{
+  "name": "twixt-select",
+  "version": "0.0.1",
+  "description": "select elements from document",
+  "main": "select.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/richRemer/twixt-select.git"
+  },
+  "author": "Richard Remer (reanjr@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/richRemer/twixt-select/issues"
+  },
+  "homepage": "https://github.com/richRemer/twixt-select#readme"
+}
