@@ -1,4 +1,29 @@
 /**
+ * Create function composition which passes each selected element to a base
+ * function.
+ * @param {function} impl
+ * @returns {function}
+ */
+function into(impl) {
+    /**
+     * @param {string} selector
+     * @param {Docunent|Element} [context]
+     */
+    return function(selector, context) {
+        var callContext = this,
+            extra;
+
+        if (typeof selector === "string" && context && context.querySelector) {
+            extra = Array.prototype.slice(arguments, 2);
+
+            select(selector, context, function(elem) {
+                impl.apply(callContext, [elem].concat(extra));
+            });
+        }
+    };
+}
+
+/**
  * Return selected elements or iterate and apply a function.
  * @param {string} selector
  * @param {Document|Element} [context]
@@ -21,4 +46,4 @@ function select(selector, context, fn) {
 }
 
 module.exports = select;
-
+module.exports.into = into;
