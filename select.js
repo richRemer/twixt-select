@@ -7,18 +7,25 @@
 function into(impl) {
     /**
      * @param {string} selector
-     * @param {Docunent|Element} [context]
+     * @param {Document|Element} [context]
      */
     return function(selector, context) {
         var callContext = this,
             extra;
 
-        if (typeof selector === "string" && context && context.querySelector) {
-            extra = Array.prototype.slice(arguments, 2);
-
+        if (typeof selector === "string") {
+            if (context && context.querySelector) {
+                extra = Array.prototype.slice.call(arguments, 2);
+            } else {
+                extra = Array.prototype.slice.call(arguments, 1);
+                context = document;
+            }
+            
             select(selector, context, function(elem) {
                 impl.apply(callContext, [elem].concat(extra));
             });
+        } else {
+            impl.apply(callContext, arguments);
         }
     };
 }
@@ -38,7 +45,7 @@ function select(selector, context, fn) {
         context = undefined;
     }
     
-    nodes = (context || document).querySelector(selector);
+    nodes = (context || document).querySelectorAll(selector);
     nodes = Array.prototype.slice.call(nodes);
     
     if (fn) nodes.forEach(fn);
